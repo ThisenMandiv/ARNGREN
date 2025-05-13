@@ -1,0 +1,140 @@
+.discounts-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.discounts-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-line {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  margin: 0 auto;
+  margin-top: 0.5rem;
+}
+
+.coupons-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.coupon-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  position: relative;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ef4444;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.code-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.code-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.copy-icon {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.promotion-title {
+  color: #6b7280;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.discount-box {
+  background: #eff6ff;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.discount-percentage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.discount-off {
+  color: #4b5563;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+.footer {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.issuer {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+}
+
+.message.loading {
+  color: #6b7280;
+}
+
+.message.error {
+  color: #ef4444;
+}
+
+.message.empty {
+  color: #9ca3af;
+} 

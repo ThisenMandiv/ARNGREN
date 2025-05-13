@@ -1,0 +1,128 @@
+.customization-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.customization-modal.pro-modal-layout {
+  background: #181818;
+  color: #fff;
+  border-radius: 12px;
+  width: 90vw;
+  max-width: 900px;
+  min-height: 120px;
+  height: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  overflow: hidden;
+}
+
+.customization-form-section {
+  flex: 1 1 0;
+  padding: 10px 8px 10px 8px;
+  background: #181818;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 320px;
+}
+
+.customization-form-section h2 {
+  color: #ffd700;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.customization-options label {
+  display: block;
+  margin-bottom: 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.customization-options select,
+.customization-options input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background: #222;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 6px;
+}
+
+.customization-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.customize-button {
+  background-color: #ffd700;
+  color: #181818;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.customize-button:hover {
+  background: #e6c200;
+}
+.cancel-button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cancel-button:hover {
+  background: #444;
+}
+
+.customization-preview-section {
+  flex: 1 1 0;
+  background: #111;
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  border-left: 2px solid #222;
+}
+
+@media (max-width: 800px) {
+  .customization-modal.pro-modal-layout {
+    flex-direction: column;
+    min-width: 0;
+    width: 96vw;
+    max-width: 96vw;
+  }
+  .customization-form-section, .customization-preview-section {
+    min-width: 0;
+    width: 100%;
+    padding: 8px 2px;
+  }
+  .customization-preview-section {
+    border-left: none;
+    border-top: 2px solid #222;
+  }
+} 

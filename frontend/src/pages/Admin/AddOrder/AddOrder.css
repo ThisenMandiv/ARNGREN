@@ -1,0 +1,90 @@
+AddOrder.css
+
+/* Main container for Add Order form */
+.add-order-container {
+  padding: 30px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px #0000001a;
+  max-width: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Title for the Add Order form */
+.add-order-container h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form container */
+.add-order-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Label styling */
+.add-order-container label {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Input field styling */
+.add-order-container input[type="text"],
+.add-order-container input[type="number"],
+.add-order-container input[type="date"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Submit button styling */
+.add-order-container button {
+  padding: 12px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect for the submit button */
+.add-order-container button:hover {
+  background-color: #575757;
+}
+
+/* Styling for small screens */
+@media screen and (max-width: 600px) {
+  .add-order-container {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .add-order-container h1 {
+    font-size: 20px;
+  }
+
+  .add-order-container label {
+    font-size: 16px;
+  }
+
+  .add-order-container input[type="text"],
+  .add-order-container input[type="number"],
+  .add-order-container input[type="date"] {
+    font-size: 14px;
+  }
+
+  .add-order-container button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+} 
+  

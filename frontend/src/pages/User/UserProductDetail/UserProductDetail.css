@@ -1,0 +1,144 @@
+/* Global Styles */
+body {
+  background-color: #000000; /* Dark background for luxury feel */
+  color: #e6e6e6; /* Light grey text for contrast */
+  font-family: 'Roboto', sans-serif; /* Elegant font */
+  margin: 0;
+  padding: 0;
+}
+
+/* User Detail Container */
+.user-detail-container {
+  padding: 30px;
+  background-color: #000000; /* Dark grey background for content */
+  border-radius: 16px;
+  max-width: 800px;
+  margin: 50px auto;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6); /* Soft shadow for depth */
+}
+
+/* Breadcrumb */
+.user-detail-breadcrumb {
+  font-size: 16px;
+  color: #b0b0b0; /* Silver color for breadcrumb */
+  margin-bottom: 20px;
+}
+
+/* Image Section */
+/* Image Section */
+.user-detail-image-section img {
+  width: 40%; /* Reduce the width to make the image smaller */
+  max-height: 300px; /* Adjust the height to be slightly smaller */
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #444;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Elegant shadow around image */
+  margin-bottom: 20px; /* Add space below the image */
+}
+
+
+/* Product Info Section */
+.user-detail-info-section {
+  padding-left: 40px;
+  color: #d0d0d0; /* Lighter grey text */
+}
+
+h1 {
+  font-size: 38px;
+  color: #ffffff; /* White text for title */
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.user-detail-category {
+  font-size: 18px;
+  color: #b0b0b0; /* Silver accent for category */
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.user-detail-description {
+  font-size: 16px;
+  color: #d0d0d0;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.user-detail-price {
+  font-size: 24px;
+  color: #a5a5a5; /* Light silver price text */
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Stock Status */
+.stock-status {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.in-stock {
+  color: #2ecc71; /* Green for in-stock */
+}
+
+.low-stock {
+  color: #f39c12; /* Orange for low-stock */
+}
+
+.out-of-stock {
+  color: #e74c3c; /* Red for out-of-stock */
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  background-color: #b0b0b0; /* Silver background */
+  color: #121212; /* Dark text */
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #9b9b9b; /* Darker silver on hover */
+  transform: translateY(-2px); /* Elevate the button for hover effect */
+}
+
+.add-to-cart-btn:disabled {
+  background-color: #444444; /* Disabled button with dark grey */
+  cursor: not-allowed;
+}
+
+/* Link Styling */
+a {
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffffff; /* White color on hover */
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error {
+  background-color: #8b0000;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 24px;
+  color: #f1f1f1;
+  padding: 50px;
+}
+

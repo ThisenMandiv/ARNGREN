@@ -1,0 +1,133 @@
+/* Main page container */
+.user-page-container {
+  background-color: #0b0b0b; /* Deep black background for luxury feel */
+  color: #e0e0e0; /* Light grey text for readability */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.user-page-container h1 {
+  color: #fff; /* White color for heading */
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.back-link {
+  color: #b0b0b0; /* Soft silver for the back link */
+  text-decoration: none;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.back-link:hover {
+  color: #ffffff; /* Hover effect for back link */
+}
+
+/* Loading, error, and no results message */
+.loading-message,
+.error-message,
+.no-results-message {
+  color: #b0b0b0; /* Silver text color */
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.error-message {
+  background-color: #8b0000; /* Dark red background for error */
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.no-results-message {
+  font-size: 1.5rem;
+  color: #888; /* Soft grey for no results */
+}
+
+/* Order History List */
+.order-history-list {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 30px;
+}
+
+/* Each order item */
+.order-history-item {
+  background-color: #1a1a1a; /* Dark grey background for each order item */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333; /* Subtle border */
+}
+
+.order-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.order-item-header h3 {
+  color: #fff; /* White color for order ID */
+  font-size: 1.4rem;
+}
+
+.order-item-header .order-status-badge {
+  padding: 8px 12px;
+  background-color: #888; /* Silver color for status badge */
+  border-radius: 6px;
+  font-weight: 500;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.order-item-body p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.order-item-body strong {
+  color: #b0b0b0; /* Soft silver for strong text */
+}
+
+/* Status badge colors based on order status */
+.order-status-badge.status-pending {
+  background-color: #f39c12; /* Yellow-orange for pending */
+}
+
+.order-status-badge.status-shipped {
+  background-color: #27ae60; /* Green for shipped */
+}
+
+.order-status-badge.status-delivered {
+  background-color: #8e44ad; /* Purple for delivered */
+}
+
+.order-status-badge.status-cancelled {
+  background-color: #c0392b; /* Red for cancelled */
+}
+
+.order-item-footer {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.order-item-footer a {
+  color: #b0b0b0; /* Silver link color */
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.order-item-footer a:hover {
+  color: #ffffff; /* Hover effect for links */
+  text-decoration: underline;
+}

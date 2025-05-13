@@ -1,0 +1,118 @@
+/* General Page Container */
+.static-page-container.events-list-user {
+    background-color: #000; /* deep black */
+    color: #f1f1f1; /* soft silver text */
+    padding: 40px 20px;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Title Styling */
+  .page-title {
+    color: #c0c0c0; /* silver */
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #444; /* subtle underline */
+    padding-bottom: 10px;
+  }
+  
+  /* Event Items Container */
+  .event-items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+  }
+  
+  /* Each Event Box */
+  .event-item-user {
+    background: #111; /* near black */
+    border: 1px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .event-item-user:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(192, 192, 192, 0.2);
+  }
+  
+  /* Event Image */
+  .event-image-user img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #444;
+  }
+  
+  /* Event Details */
+  .event-details-user {
+    padding: 20px;
+  }
+  
+  .event-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+  }
+  
+  .event-meta {
+    font-size: 0.95rem;
+    color: #bbb;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+  
+  .event-description-user {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+  }
+  
+  /* Info Banners */
+  .info-banner {
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
+  .info-banner.loading {
+    background-color: #1e1e1e;
+    color: #aaa;
+  }
+  
+  .info-banner.error {
+    background-color: #330000;
+    color: #ff9999;
+    border: 1px solid #ff4d4d;
+  }
+  
+  .info-banner.empty {
+    background-color: #1a1a1a;
+    color: #888;
+  }
+  
+  /* Optional Register Link */
+  .register-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #555, #aaa);
+    color: #000;
+    font-weight: bold;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  
+  .register-link:hover {
+    background: linear-gradient(135deg, #aaa, #fff);
+  }
+  

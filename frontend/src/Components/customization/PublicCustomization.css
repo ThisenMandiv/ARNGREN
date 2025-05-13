@@ -1,0 +1,478 @@
+/* PublicCustomization.css */
+
+/* Global Styles (if not already in a main CSS file) */
+body {
+    background-color: #0c0c0c; /* Very dark base */
+    color: #e0e0e0;
+    font-family: 'Roboto', 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+  }
+  
+  .public-customization-page {
+    max-width: 1300px; /* Increased max-width for a more spacious feel */
+    margin: 30px auto;
+    padding: 20px 30px; /* Adjusted padding */
+  }
+  
+  .page-main-title {
+    font-size: 2.6em; /* Slightly reduced for elegance */
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 35px;
+    color: #ffffff;
+    font-family: 'Merriweather', 'Georgia', serif; /* Elegant serif */
+    letter-spacing: -0.5px;
+  }
+  
+  /* Layout Grid */
+  .layout-grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Main content takes more space */
+    gap: 35px; /* Increased gap */
+  }
+  
+
+  
+  .form-card {
+    background-color: #181818; /* Darker card background */
+    border-radius: 12px; /* Softer radius */
+    padding: 30px 35px; /* Ample padding */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4); /* Pronounced shadow */
+  }
+  
+  /* Selected Product Display */
+  .product-display-section {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #383838; /* Darker separator */
+  }
+  
+  .product-info-flex {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .product-image-custom {
+    width: 100px; /* Slightly smaller */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #4a4a4a; /* Refined border */
+  }
+  
+  .product-details-custom .product-name-custom {
+    font-size: 1.5em; /* Adjusted size */
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+  }
+  
+  .product-details-custom .product-meta-custom {
+    color: #b0b0b0; /* Lighter grey for meta */
+    font-size: 0.9em;
+    margin: 3px 0;
+  }
+  
+  /* Step Indicator */
+  .step-indicator-container {
+    display: flex;
+    justify-content: space-around; /* Distribute space for 2 steps */
+    align-items: flex-start;
+    margin-bottom: 35px;
+    position: relative;
+  }
+  
+  .step-indicator-container::after { /* Connector line styling */
+    content: "";
+    position: absolute;
+    top: 18px; /* (36px circle height / 2) */
+    left: calc(25% + 18px); /* Adjust based on 2 items, starts after first half of first item */
+    right: calc(25% + 18px);/* Adjust based on 2 items, ends before second half of last item */
+    height: 3px;
+    background-color: #444; /* Darker connector */
+    z-index: 0;
+  }
+  
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 50%; /* Equal basis for 2 steps */
+    position: relative;
+    z-index: 1;
+  }
+  
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    border: 2px solid #555; /* Default border */
+    background-color: #1E1E1E; /* To cover the line */
+  }
+  
+  .step-circle.active {
+    background-color: #A076F9; /* Luxury Purple */
+    color: #ffffff;
+    border-color: #A076F9;
+  }
+  
+  .step-circle.completed {
+    background-color: #3CAA82; /* Refined Green */
+    color: #ffffff;
+    border-color: #3CAA82;
+  }
+  
+  .step-circle.pending {
+    background-color: #2C2C2C; /* Darker pending */
+    color: #888;
+    border-color: #555;
+  }
+  
+  .step-text {
+    font-size: 0.85em; /* Slightly larger */
+    color: #aaaaaa;
+    margin-top: 10px; /* Increased margin */
+    text-align: center;
+  }
+  
+  /* Form Elements */
+  .form-step-content {
+      padding-top: 10px; /* Space below step indicator */
+  }
+  .form-section-title {
+    font-size: 1.7em; /* Adjusted size */
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #f0f0f0; /* Brighter title */
+    padding-bottom: 12px;
+    border-bottom: 1px solid #444;
+    font-family: 'Merriweather Sans', sans-serif; /* Modern elegant sans-serif */
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Responsive columns */
+    gap: 22px; /* Slightly increased gap */
+    margin-bottom: 25px;
+  }
+  
+  .form-field {
+    margin-bottom: 15px; /* Default margin if not in grid */
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #c0c0c0; /* Lighter label color */
+    margin-bottom: 8px;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 12px 16px; /* More padding */
+    background-color: #282828; /* Dark input background */
+    color: #e0e0e0;
+    border: 1px solid #505050; /* Subtle border */
+    border-radius: 6px; /* Softer radius */
+    font-size: 0.95em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Important for width calculation */
+  }
+  
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: #777;
+  }
+  
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: #A076F9; /* Luxury Purple */
+    box-shadow: 0 0 0 3px rgba(160, 118, 249, 0.25); /* Softer shadow */
+  }
+  
+  .form-input.input-error,
+  .form-select.input-error,
+  .form-textarea.input-error {
+    border-color: #E57373; /* Softer red for error */
+    box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.2);
+  }
+  .error-text {
+      color: #E57373;
+      font-size: 0.8em;
+      margin-top: 5px;
+  }
+  
+  
+  .form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23AAAAAA%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-12.8z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 10px auto;
+    padding-right: 40px; /* Ensure space for arrow */
+  }
+  .form-select option {
+      background-color: #282828;
+      color: #e0e0e0;
+  }
+  
+  .form-textarea {
+    min-height: 120px; /* Taller textarea */
+    resize: vertical;
+  }
+  
+  /* Navigation Buttons */
+  .form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px; /* Increased margin */
+    padding-top: 25px; /* Space above buttons */
+    border-top: 1px solid #383838;
+  }
+  
+  .button {
+    padding: 12px 28px; /* Generous padding */
+    border: none;
+    border-radius: 25px; /* Pill shape */
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    letter-spacing: 0.3px;
+  }
+  .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+  .button:active {
+      transform: translateY(0px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+  
+  .button-primary {
+    background-color: #A076F9; /* Luxury Purple */
+    color: #ffffff;
+  }
+  .button-primary:hover {
+    background-color: #895 интенсивностьюPURPLE; /* Darker purple */
+  }
+  
+  .button-secondary {
+    background-color: #3a3a3a; /* Darker gray */
+    color: #e0e0e0;
+    border: 1px solid #555;
+  }
+  .button-secondary:hover {
+    background-color: #484848;
+    border-color: #777;
+  }
+  
+  .button-submit {
+    background-color: #3CAA82; /* Refined Green */
+    color: #ffffff;
+  }
+  .button-submit:hover {
+    background-color: #2F855A; /* Darker green */
+  }
+  
+  /* Review Section */
+  .review-summary-box {
+    background-color: #222222; /* Darker review box */
+    padding: 25px 30px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #404040; /* Subtle border */
+  }
+  
+  .review-summary-subtitle {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #555; /* Dashed separator */
+  }
+  
+  .review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .review-list-item {
+    font-size: 0.95em;
+    color: #c8c8c8; /* Lighter text */
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+  }
+  .review-list-item:last-child {
+      border-bottom: none;
+  }
+  
+  .review-list-item strong {
+    color: #e8e8e8; /* Brighter strong text */
+    margin-right: 15px; /* Increased margin */
+    min-width: 120px; /* Ensure alignment */
+    flex-shrink: 0;
+  }
+  .review-list-item span {
+      text-align: right;
+      word-break: break-word;
+  }
+  .review-list-item-block {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .review-list-item-block strong {
+      margin-bottom: 5px;
+  }
+  .review-list-item-block span.review-instructions-text {
+      text-align: left;
+      display: block;
+      width: 100%;
+      background-color: #2a2a2a;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #b0b0b0;
+  }
+  
+  
+  .review-note {
+    font-size: 0.9em;
+    color: #aaaaaa;
+    margin-bottom: 25px;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(160, 118, 249, 0.05); /* Faint purple bg */
+    border-radius: 6px;
+    border: 1px solid rgba(160, 118, 249, 0.2);
+  }
+  
+  .error-message-submit {
+    color: #FF7676; /* Brighter red */
+    background-color: rgba(255, 118, 118, 0.1);
+    border: 1px solid #FF7676;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Preview Panel */
+  .preview-panel-container {
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 25px 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    height: fit-content; /* Adjust as needed, sticky can be added */
+    position: sticky;
+    top: 30px; /* For sticky positioning */
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .layout-grid-container {
+      grid-template-columns: 1fr; /* Stack form and preview */
+    }
+    .preview-panel-container {
+      position: static; /* Remove sticky on smaller screens or adjust */
+      margin-top: 30px;
+    }
+    .page-main-title {
+      font-size: 2.2em;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .public-customization-page {
+      padding: 15px 20px;
+    }
+    .form-card {
+      padding: 20px 25px;
+    }
+    .form-grid {
+      grid-template-columns: 1fr; /* Single column for form items */
+    }
+    .product-info-flex {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .product-image-custom {
+      margin-bottom: 15px;
+    }
+    .page-main-title {
+      font-size: 2em;
+    }
+    .form-navigation {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-navigation .button {
+      width: 100%;
+    }
+    .button-primary[style*="margin-left: auto"] { /* Reset auto margin */
+        margin-left: 0 !important;
+    }
+    .step-indicator-container::after { /* Adjust line for better mobile view */
+      left: 10%;
+      right: 10%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .public-customization-page {
+      padding: 10px 15px;
+    }
+    .form-card {
+      padding: 15px 20px;
+    }
+    .page-main-title {
+      font-size: 1.8em;
+    }
+    .product-details-custom .product-name-custom {
+      font-size: 1.3em;
+    }
+    .form-section-title {
+        font-size: 1.5em;
+    }
+    .review-summary-subtitle {
+        font-size: 1.15em;
+    }
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9em;
+    }
+    .step-indicator-container::after {
+        top: 16px; /* half of 32px */
+    }
+    .step-text {
+        font-size: 0.75em;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+  }

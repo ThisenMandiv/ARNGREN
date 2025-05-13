@@ -1,0 +1,96 @@
+/* SearchOrders.css */
+
+/* Main container for the search page */
+.search-container {
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  max-width: 1000px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Title for the search page */
+.search-container h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Search input container */
+.search-input-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Search input field */
+.search-input {
+  padding: 10px;
+  width: 300px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Table styling */
+.table-container {
+  margin-top: 20px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead {
+  background-color: #333;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Row color alternation for table */
+table tbody tr:nth-child(even) {
+  background-color: #000000;
+}
+
+/* Hover effect for rows */
+table tbody tr:hover {
+  background-color: #0f0e0e;
+}
+
+/* Message for no results */
+.no-results {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+  .search-container {
+    padding: 15px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+  }
+}

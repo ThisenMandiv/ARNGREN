@@ -1,0 +1,93 @@
+/* src/App.css or src/index.css */
+
+/* Basic body reset (optional but common) */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f4f7f6; /* Light background for the whole page */
+    color: #333;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  /* --- Layout for Sticky Footer --- */
+  /* Apply flex display to the main app container div */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure container takes at least full viewport height */
+  }
+  
+  /* --- Layout for Admin Sidebar --- */
+  /* Style for the main content area WHEN the admin sidebar is present */
+  .admin-page-content {
+    /* This margin MUST match the width set for .admin-sidebar in Nav.css */
+    margin-left: 250px; /* Adjust this value if your sidebar width is different */
+  
+    /* Add padding for spacing around the content */
+    padding: 20px 30px;
+  
+    /* Ensure content takes up space */
+    min-height: 100vh; /* Optional: makes the background fill the height */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    background-color: #f8f9fa; /* Optional: slightly different background for content area */
+  
+    /* IMPORTANT: Ensure this isn't overridden by more specific styles */
+    width: calc(100% - 250px); /* Optional: Explicitly set width */
+  
+    /* Allow this area to grow to push footer down */
+    flex-grow: 1;
+  }
+  
+  
+  /* --- Padding for User Pages to prevent footer overlap --- */
+  /* Add padding to the bottom of user page containers */
+  /* You might need to add this to multiple user page CSS files */
+  /* Or create a common wrapper component/class for user pages */
+  .user-page-container, /* Example class */
+  .static-page-container, /* Example class */
+  .product-gallery-container, /* Example class */
+  .user-detail-container, /* Example class */
+  .auth-page-container /* Example class */
+   {
+    padding-bottom: 60px; /* Add space at the bottom */
+    flex-grow: 1; /* Allow content to grow */
+  }
+  
+  /* Ensure the footer itself doesn't contribute to flex-grow */
+  /* This rule should be in Footer.css or here */
+  .site-footer {
+      flex-shrink: 0; /* Prevent footer from shrinking */
+  }
+  
+  
+  /* --- Responsive adjustments for Admin Sidebar --- */
+  @media (max-width: 768px) {
+    /* Example: If your sidebar hides completely on mobile */
+    /*
+    .admin-page-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 15px;
+    }
+    */
+  
+    /* Example: If your sidebar becomes narrower on mobile */
+    /*
+    .admin-page-content {
+      margin-left: 80px; // Adjust to new sidebar width
+      width: calc(100% - 80px);
+    }
+    */
+  }
+  
+  /* Add any other global styles needed for your app below */
+  
+  

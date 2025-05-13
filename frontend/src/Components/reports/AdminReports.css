@@ -1,0 +1,296 @@
+.admin-reports-page {
+  min-height: 100vh;
+  background-color: #0A0A0A; /* Deep dark background */
+  padding: 30px 35px; /* Generous padding */
+  color: #E0E0E0;
+  font-family: 'Roboto', 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.reports-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px; /* Increased spacing */
+  padding-bottom: 25px;
+  border-bottom: 1px solid #333; /* Subtle separator */
+}
+
+.page-main-title-reports {
+  font-size: 2.6em; /* Prominent title */
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #FFFFFF;
+  font-family: 'Merriweather', 'Georgia', serif; /* Elegant serif */
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+/* Styling for the custom Button component via a class */
+.button-generate-pdf {
+  background-color: #A076F9; /* Luxury Purple */
+  color: #FFFFFF;
+  padding: 12px 28px; /* More padding */
+  border: none;
+  border-radius: 25px; /* Pill shape */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  font-size: 1em;
+  letter-spacing: 0.3px;
+  box-shadow: 0 5px 15px rgba(160, 118, 249, 0.2); /* Subtle shadow */
+}
+.button-generate-pdf:hover {
+  background-color: #8964E8; /* Darker purple on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(160, 118, 249, 0.3);
+}
+.button-generate-pdf:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(160, 118, 249, 0.2);
+}
+
+
+.charts-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); /* Responsive columns, slightly wider min */
+  gap: 35px; /* Increased gap */
+}
+
+.chart-card-reports { /* This is also used by html2canvas as '.chart-container' implicitly */
+  background-color: #1A1A1A; /* Dark card background */
+  border-radius: 12px; /* Softer radius */
+  padding: 25px 30px; /* Ample padding */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.chart-card-reports:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(160, 118, 249, 0.1); /* Accent shadow on hover */
+}
+
+
+.chart-title-reports {
+  font-size: 1.6em; /* Clear chart title */
+  font-weight: 600;
+  margin-bottom: 25px; /* More space below title */
+  color: #E8E8E8; /* Brighter title text */
+  text-align: center;
+  font-family: 'Merriweather Sans', sans-serif; /* Elegant sans-serif */
+}
+
+.chart-wrapper { /* Ensures chartjs canvas respects container padding */
+    height: 350px; /* Fixed height for consistent chart sizes */
+    position: relative;
+}
+
+
+.no-data-message-reports {
+  color: #999999; /* Softer gray for no data */
+  text-align: center;
+  padding: 40px 15px;
+  font-style: italic;
+  font-size: 1.1em; /* Slightly larger */
+  min-height: 150px; /* Ensure it takes some space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailed-reports-section {
+  margin-top: 50px; /* More space above detailed reports */
+  padding-top: 30px;
+  border-top: 1px solid #333;
+}
+
+.detailed-reports-main-title {
+  font-size: 2em; /* Prominent title for this section */
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #484848; /* Dashed separator */
+  font-family: 'Merriweather', 'Georgia', serif;
+}
+
+.detailed-report-card {
+  background-color: #1A1A1A;
+  border-radius: 12px;
+  padding: 30px 35px; /* Generous padding */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.detailed-report-subtitle {
+  font-size: 1.5em; /* Clear subtitle */
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #E8E8E8;
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+.detailed-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap between list items */
+}
+
+.detailed-list-item-reports {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 5px; /* Adjusted padding */
+  border-bottom: 1px solid #2A2A2A; /* Darker, subtle separator */
+  font-size: 1em; /* Consistent font size */
+  transition: background-color 0.2s ease;
+}
+.detailed-list-item-reports:last-child {
+  border-bottom: none;
+}
+.detailed-list-item-reports:hover {
+    background-color: rgba(255,255,255,0.03); /* Very subtle hover */
+}
+
+.detailed-list-item-reports span:first-child {
+  color: #B8B8B8; /* Lighter label color */
+  flex-basis: 60%; /* Give more space to label */
+}
+
+.detailed-list-item-reports span:last-child {
+  font-weight: 600; /* Bolder value */
+  color: #FFFFFF;
+  text-align: right;
+  flex-basis: 40%;
+}
+
+.loading-container-reports {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 20px;
+}
+
+.loading-spinner-reports {
+  width: 52px; /* Slightly larger spinner */
+  height: 52px;
+  border: 5px solid rgba(160, 118, 249, 0.2); /* Softer base border */
+  border-left-color: #A076F9; /* Luxury Purple for spinner active part */
+  border-radius: 50%;
+  animation: spinAnimationReports 0.9s linear infinite; /* Slightly faster spin */
+}
+
+.loading-text-reports {
+  margin-top: 25px; /* More space below spinner */
+  color: #AAAAAA; /* Softer loading text color */
+  font-size: 1.15em; /* Slightly larger text */
+  font-weight: 500;
+}
+
+@keyframes spinAnimationReports {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) { /* Adjusted breakpoint for tablets */
+    .charts-grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adjust min width for tablets */
+    }
+    .page-main-title-reports {
+        font-size: 2.2em;
+    }
+    .chart-title-reports {
+        font-size: 1.4em;
+    }
+    .detailed-reports-main-title {
+        font-size: 1.7em;
+    }
+    .detailed-report-subtitle {
+        font-size: 1.3em;
+    }
+}
+
+
+@media (max-width: 768px) {
+  .admin-reports-page {
+    padding: 20px 25px;
+  }
+  .reports-header-section {
+    margin-bottom: 30px;
+  }
+  .page-main-title-reports {
+    font-size: 2em;
+  }
+  .button-generate-pdf {
+    padding: 10px 22px;
+    font-size: 0.95em;
+  }
+  .charts-grid-container {
+    gap: 25px;
+  }
+  .chart-card-reports {
+    padding: 20px 25px;
+  }
+   .chart-wrapper {
+    height: 300px; /* Adjust chart height for smaller screens */
+  }
+  .detailed-reports-section {
+    margin-top: 40px;
+  }
+  .detailed-reports-main-title {
+    font-size: 1.6em;
+  }
+  .detailed-report-card {
+    padding: 20px 25px;
+  }
+  .detailed-report-subtitle {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-reports-page {
+    padding: 15px 15px;
+  }
+  .page-main-title-reports {
+    font-size: 1.8em;
+  }
+  .button-generate-pdf {
+    width: 100%; /* Full width button */
+    text-align: center;
+  }
+  .charts-grid-container {
+    grid-template-columns: 1fr; /* Single column for charts */
+  }
+  .chart-card-reports {
+    padding: 15px 20px;
+  }
+  .chart-title-reports {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+  }
+  .chart-wrapper {
+    height: 280px;
+  }
+  .detailed-reports-main-title {
+    font-size: 1.4em;
+  }
+  .detailed-report-card {
+    padding: 15px 20px;
+  }
+  .detailed-report-subtitle {
+    font-size: 1.1em;
+  }
+  .detailed-list-item-reports {
+    font-size: 0.9em;
+    flex-direction: column; /* Stack label and value */
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .detailed-list-item-reports span:last-child {
+      text-align: left;
+      font-weight: 500;
+  }
+} 
