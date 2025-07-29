@@ -1,128 +1,116 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import api from '../../services/api';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const CATEGORY_STRUCTURE = [
+  {
+    icon: '🚗',
+    name: 'Vehicles & Transport',
+    subcategories: [
+      'ATV (el.)', 'Car, el-car', 'el-Scooter & Car', 'el-Sykle-1, 2', 'Fatbike-el', 'GoKart-Pedal, el', 'Golf cars (m/skille)', 'Moped-el', 'Motorcycle-Mini', 'Bicycle-el, 1, 2'
+    ]
+  },
+  {
+    icon: '🎮',
+    name: 'Toys & Hobbies',
+    subcategories: [
+      'Hobby & RC', 'Hoverpod', 'Rocket-Fly', 'RC Products', 'Figures'
+    ]
+  },
+  {
+    icon: '📷',
+    name: 'Electronics & Gadgets',
+    subcategories: [
+      'Aquarium', 'Alarm', 'Alkotester', 'Photo Tiles', 'Digital-Certain', 'Disko-Lys', 'DVD-Player', 'Translator', 'Charger-230Vaq', 'Robots', 'Robot-Stilsandsvug', 'Solcellr'
+    ]
+  },
+  {
+    icon: '🏠',
+    name: 'Home & Entertainment',
+    subcategories: [
+      'Billiards table M/b', 'Electronics & Bab', 'HP-Mtolaughs (Bill', 'TV-Ur & Armb. Ur', 'Star-heaven'
+    ]
+  },
+  {
+    icon: '🎯',
+    name: 'Fun & Miscellaneous',
+    subcategories: [
+      'Air-joke', 'Listen', 'Converter', 'Compass (Bill/Bike)', 'Snow Shares', 'Train track (to PC)', 'Walkie Talk'
+    ]
+  }
+];
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);
-  const [categoryCounts, setCategoryCounts] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    setLoading(true);
-    Promise.all([
-      api.get('/categories'),
-      api.get('/ads')
-    ])
-      .then(([catRes, adRes]) => {
-        console.log('Home - Categories received:', catRes.data);
-        console.log('Home - Ads received:', adRes.data);
-        
-        setCategories(catRes.data);
-        
-        // Calculate ad counts for each category
-        const counts = {};
-        adRes.data.forEach(ad => {
-          counts[ad.category] = (counts[ad.category] || 0) + 1;
-        });
-        setCategoryCounts(counts);
-        
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Failed to load data.');
-        setLoading(false);
-      });
-  }, []);
-
-  // Category icons mapping
-  const getCategoryIcon = (categoryName) => {
-    const icons = {
-      'Mobiles': '📱',
-      'Property': '🏠',
-      'Electronics': '💻',
-      'Vehicles': '🚗',
-      'Services': '🔧',
-      'Home & Garden': '🏡',
-      'Business & Industry': '🏭',
-      'Jobs': '💼',
-      'Hobby, Sport & Kids': '⚽',
-      'Animals': '🐕',
-      'Fashion & Beauty': '⌚',
-      'Education': '🎓'
-    };
-    return icons[categoryName] || '📦';
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  const [selectedMain, setSelectedMain] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <div>
       <h1>ARNGREN</h1>
       <h2>Browse items by category</h2>
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-        gap: '20px',
-        padding: '20px 0'
-      }}>
-        {categories.map(cat => (
-          <Link 
-            key={cat._id} 
-            to={`/ads/category/${cat.name}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '20px',
-              backgroundColor: 'white',
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-              textDecoration: 'none',
-              color: 'inherit',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              border: '1px solid #e0e0e0'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ 
-              fontSize: '48px', 
-              marginBottom: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '60px',
-              height: '60px'
-            }}>
-              {getCategoryIcon(cat.name)}
-            </div>
-            <div style={{ 
-              fontWeight: 'bold', 
-              fontSize: '16px',
-              marginBottom: '8px',
-              textAlign: 'center',
-              color: '#333'
-            }}>
-              {cat.name}
-            </div>
-            <div style={{ 
-              fontSize: '14px', 
-              color: '#666',
-              textAlign: 'center'
-            }}>
-              {categoryCounts[cat.name] || 0} ads
-            </div>
-          </Link>
-        ))}
-      </div>
+      {!selectedMain ? (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '24px',
+          padding: '24px 0'
+        }}>
+          {CATEGORY_STRUCTURE.map((cat, idx) => (
+            <button
+              key={cat.name}
+              onClick={() => setSelectedMain(idx)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '28px',
+                backgroundColor: 'white',
+                borderRadius: '10px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                border: '1px solid #e0e0e0',
+                fontSize: '1.1rem',
+                cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                outline: 'none'
+              }}
+            >
+              <span style={{ fontSize: '48px', marginBottom: '14px' }}>{cat.icon}</span>
+              <span style={{ fontWeight: 'bold', color: '#333', textAlign: 'center' }}>{cat.name}</span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <button onClick={() => setSelectedMain(null)} style={{ marginBottom: 20, background: 'none', border: 'none', color: '#118d21', fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}>&larr; Back to main categories</button>
+          <h3 style={{ marginBottom: 16 }}>{CATEGORY_STRUCTURE[selectedMain].icon} {CATEGORY_STRUCTURE[selectedMain].name}</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '18px',
+            padding: '10px 0'
+          }}>
+            {CATEGORY_STRUCTURE[selectedMain].subcategories.map(sub => (
+              <button
+                key={sub}
+                onClick={() => navigate(`/ads/category/${encodeURIComponent(sub)}`)}
+                style={{
+                  padding: '18px',
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+                  border: '1px solid #e0e0e0',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  color: '#222',
+                  fontWeight: 500
+                }}
+              >
+                {sub}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
