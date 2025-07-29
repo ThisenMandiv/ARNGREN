@@ -13,7 +13,7 @@ function Nav() {
     return (
         <nav className="admin-sidebar">
             <div className="admin-sidebar-brand">
-                <NavLink to="/admin">Admin Panel</NavLink>
+                <NavLink to="/admin">🇳🇴 Admin Panel</NavLink>
             </div>
 
             <ul className="admin-sidebar-nav-list">
