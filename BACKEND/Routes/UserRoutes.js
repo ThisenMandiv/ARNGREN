@@ -29,6 +29,9 @@ router.put("/:id", validateObjectId, userController.updateUser);
 // DELETE a specific user
 router.delete("/:id", requireAuth, validateObjectId, userController.deleteUser);
 
+// POST route to set user as admin
+router.post("/set-admin", userController.setUserAsAdmin);
+
 // POST route for adding users is removed - use POST /api/auth/register instead
 
 export default router;

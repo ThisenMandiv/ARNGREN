@@ -11,10 +11,10 @@ function Footer() {
         <footer className="site-footer">
             <div className="footer-content">
                 <div className="footer-section about">
-                    <h3 className="footer-logo">JADE JEWELLERS</h3>
+                    <h3 className="footer-logo">ARNGREN</h3>
                     <p>
-                        Exquisite gems and handcrafted jewelry, created with passion and precision.
-                        Discover timeless elegance with our curated collections.
+                        Your trusted marketplace for quality products and services. 
+                        Connect, trade, and discover amazing deals in our vibrant community.
                     </p>
                     <div className="social-links">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FiFacebook /></a>
@@ -27,24 +27,24 @@ function Footer() {
                 <div className="footer-section links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><Link to="/about">About Us</Link></li>
-                        <li><Link to="/contact">Contact Us</Link></li>
-                        <li><Link to="/products">Shop</Link></li>
-                        <li><Link to="/blog">Blog</Link></li>
-                        <li><Link to="/events">Events</Link></li>
-                        {/* Add other links like FAQ, Terms, Privacy Policy */}
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/ads">Browse Ads</Link></li>
+                        <li><Link to="/post-ad">Post Ad</Link></li>
+                        <li><Link to="/my-ads">My Ads</Link></li>
+                    
                     </ul>
                 </div>
 
                 <div className="footer-section contact-info">
                     <h3>Contact Info</h3>
-                    <p>123 Gem Lane, Nugegoda, Sri Lanka</p>
-                    <p>Phone: +94 11 234 5678</p>
-                    <p>Email: info@jadejewellers.lk</p>
+                    <p>📍 Colombo, Sri Lanka</p>
+                    <p>📞 Phone: +94 11 234 5678</p>
+                    <p>✉️ Email: info@arngren.lk</p>
+                    <p>🕒 Mon - Fri: 9:00 AM - 6:00 PM</p>
                 </div>
             </div>
             <div className="footer-bottom">
-                &copy; {currentYear} JADE JEWELLERS | All Rights Reserved
+                &copy; {currentYear} ARNGREN | All Rights Reserved | Privacy Policy | Terms of Service
             </div>
         </footer>
     );

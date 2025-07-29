@@ -6,25 +6,16 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import multer from 'multer';
 
 import User from "./Model/UserModel.js"; // Assuming this is the newer model with bcrypt hook
+import Category, { seedCategories } from "./Model/Category.js";
 
 // Routers (legacy + new modules)
-import productRouter from "./Routes/ProductRoutes.js";
-import orderRouter from "./Routes/OrderRoutes.js";
-import eventRouter from "./Routes/EventRoutes.js";
-import blogPostRouter from "./Routes/BlogPostRoutes.js";
-import contactRouter from "./Routes/ContactRoutes.js";
-
-// Replace old auth/user routes with new ones
 import authRoutes from "./Routes/AuthRoutes.js";
-import userRoutes from "./Routes/userRoutes.js";
-import promotionRoutes from "./Routes/promotionRoutes.js";
-import discountRoutes from "./Routes/discountRoutes.js";
-import ticketRoutes from "./Routes/ticketRoutes.js";
-import couponCodeRoutes from "./Routes/couponCodeRoutes.js";
-import reportRoutes from "./Routes/reportRoutes.js";
-import customizationRoutes from "./Routes/customizationRoutes.js";
+import userRoutes from "./Routes/UserRoutes.js";
+import adRoutes from "./Routes/AdRoutes.js";
+import categoryRoutes from "./Routes/CategoryRoutes.js";
 
 import { requireAuth } from "./middleware/auth.js";
 
@@ -46,26 +37,44 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/ads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'ad-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed!'), false);
+    }
+  }
+});
+
 // Serve Static Files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads/ads', express.static(path.join(__dirname, 'uploads/ads')));
 app.use('/uploads/events', express.static(path.join(__dirname, 'uploads/events')));
 app.use('/uploads/blog', express.static(path.join(__dirname, 'uploads/blog')));
 console.log(`Static files served from: ${path.join(__dirname, 'uploads')}`);
+console.log(`Ad images served from: ${path.join(__dirname, 'uploads/ads')}`);
 
 // Routes
-app.use("/products", productRouter);
-app.use("/orders", orderRouter);
-app.use("/events", eventRouter);
-app.use("/blogposts", blogPostRouter);
-app.use("/contact", contactRouter);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/promotions", promotionRoutes);
-app.use("/api/discounts", discountRoutes);
-app.use("/api/tickets", ticketRoutes);
-app.use("/api/coupons", couponCodeRoutes);
-app.use("/api/reports", requireAuth, reportRoutes);
-app.use("/api/customizations", customizationRoutes);
+app.use('/api', adRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Test route
 app.get("/", (req, res) => {
@@ -119,6 +128,9 @@ const createInitialAdmin = async () => {
     console.error("⚠️ Error creating admin user:", error);
   }
 };
+
+// Seed categories on server start
+seedCategories();
 
 // Error handling middleware
 app.use((req, res, next) => {

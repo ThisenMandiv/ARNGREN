@@ -119,3 +119,42 @@ export const loginUser = async (req, res) => {
         handleError(res, err, "loginUser");
     }
 };
+
+// --- Update User Profile ---
+export const updateProfile = async (req, res) => {
+    const { name, age, address } = req.body;
+    const userId = req.user._id; // From user object set by auth middleware
+
+    if (!name && !age && !address) {
+        return res.status(400).json({ message: "Please provide at least one field to update." });
+    }
+
+    try {
+        console.log(`Updating profile for user: ${userId}`);
+        
+        // Construct update object with only provided fields
+        const updateData = {};
+        if (name) updateData.name = name;
+        if (age) updateData.age = Number(age);
+        if (address) updateData.address = address;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        console.log(`Profile updated successfully for user: ${userId}`);
+        res.status(200).json({ 
+            message: "Profile updated successfully!", 
+            user: updatedUser 
+        });
+
+    } catch (err) {
+        handleError(res, err, "updateProfile");
+    }
+};

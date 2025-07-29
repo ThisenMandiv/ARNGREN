@@ -92,6 +92,36 @@ export const updateUser = async (req, res, next) => {
     }
 };
 
+// --- Set user as admin (Admin only) ---
+export const setUserAsAdmin = async (req, res, next) => {
+    const { email } = req.body;
+    
+    if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+    }
+
+    try {
+        const user = await User.findOne({ email: email.toLowerCase() });
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.role = 'admin';
+        await user.save();
+
+        const userResponse = user.toObject();
+        delete userResponse.password;
+
+        res.status(200).json({ 
+            message: "User role updated successfully", 
+            user: userResponse 
+        });
+    } catch (err) {
+        handleError(res, err, "setUserAsAdmin");
+    }
+};
+
 // --- Delete user (Admin only) ---
 export const deleteUser = async (req, res, next) => {
     const { id } = req.params;

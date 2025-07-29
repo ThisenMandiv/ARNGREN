@@ -1,46 +1,44 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = 'http://localhost:5000/api';
 
-// Get discounts (send JWT if available)
-export const getDiscounts = async () => {
-  try {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      throw new Error('No authentication token found');
+// Create axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor to add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-    const response = await axios.get(`${API_BASE_URL}/discounts`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching discounts:', error);
+// Response interceptor to handle auth errors
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
     if (error.response?.status === 401) {
-      // Clear invalid token
-      localStorage.removeItem('authToken');
-      throw new Error('Session expired. Please login again.');
+      // Token expired or invalid
+      localStorage.removeItem('token');
+      localStorage.removeItem('authUser');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
     }
-    throw error;
+    return Promise.reject(error);
   }
-};
+);
 
-// Get all promotions (for coupon creation UI)
-export const getPromotions = async () => {
-  try {
-    const token = localStorage.getItem('authToken');
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
-    
-    const response = await axios.get(`${API_BASE_URL}/promotions`, { headers });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching promotions:', error);
-    throw error;
-  }
-};
+export default api;

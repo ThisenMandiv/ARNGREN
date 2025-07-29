@@ -1,136 +1,120 @@
-/* Main page container */
-.user-page-container {
-  background-color: #0b0b0b; /* Deep black background for luxury feel */
-  color: #e0e0e0; /* Light grey text for readability */
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 20px;
-  font-family: 'Segoe UI', sans-serif;
+.edit-profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.user-page-container h1 {
-  color: #fff; /* White color for heading */
-  font-size: 2.5rem;
+.edit-profile-container h1 {
+  text-align: center;
   margin-bottom: 30px;
-  text-align: center;
+  color: #333;
 }
 
-.back-link {
-  color: #b0b0b0; /* Soft silver for the back link */
-  text-decoration: none;
-  font-size: 1.1rem;
-  display: block;
-  margin-bottom: 20px;
-  text-align: center;
+.edit-profile-form {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border: 1px solid #e0e0e0;
 }
 
-.back-link:hover {
-  color: #ffffff; /* Hover effect for back link */
-}
-
-/* Form container */
-.admin-form-container {
-  background-color: #1a1a1a; /* Dark grey background for the form */
-  padding: 40px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 25px rgba(192, 192, 192, 0.08);
-  border: 1px solid #333; /* Subtle border */
-  color: #e0e0e0;
-}
-
-/* Form labels and inputs */
 .form-group {
   margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  color: #cccccc; /* Soft silver for form labels */
+  margin-bottom: 5px;
   font-weight: 500;
+  color: #333;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #444; /* Dark border for inputs */
-  border-radius: 8px;
-  background-color: #121212; /* Dark background for input fields */
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #888; /* Focus border color for inputs */
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-.validation-error {
-  color: #ff0000; /* Red color for validation error */
-  font-size: 0.9rem;
-  margin-top: 5px;
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-primary:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
 }
 
 .error-message {
-  background-color: #8b0000; /* Dark red for error messages */
-  color: #fff;
+  background-color: #f8d7da;
+  color: #721c24;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 4px;
   margin-bottom: 20px;
-  text-align: center;
+  border: 1px solid #f5c6cb;
 }
 
-/* Buttons (Save Changes, Cancel) */
-.submit-button {
-  background: linear-gradient(to right, #bbbbbb, #ffffff);
-  color: #000;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.submit-button:hover {
-  background: linear-gradient(to right, #ffffff, #d4d4d4);
-  transform: translateY(-2px);
-}
-
-.cancel-button {
-  color: #bbbbbb;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: 500;
-}
-
-.cancel-button:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-/* Profile Image */
-.admin-form-container img {
-  width: 80%; /* Reduced size for profile image */
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 50%; /* Circular image */
-  border: 2px solid #444; /* Elegant silver border */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 4px;
   margin-bottom: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  border: 1px solid #c3e6cb;
 }
+
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+} 

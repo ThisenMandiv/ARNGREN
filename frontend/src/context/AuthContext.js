@@ -12,6 +12,7 @@ export const AuthContext = createContext({
     ...initialState,
     login: (userData, token) => {},
     logout: () => {},
+    updateUser: (userData) => {},
 });
 
 // Create Provider Component
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const loginHandler = (userData, token) => {
+        console.log('LoginHandler called with:', { userData, token });
         setAuthState({
             isLoggedIn: true,
             token: token,
@@ -44,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('authUser', JSON.stringify(userData));
         localStorage.setItem('user', JSON.stringify(userData));
         console.log('User logged in:', userData);
+        console.log('AuthState updated:', { isLoggedIn: true, token: token, user: userData });
     };
 
     const logoutHandler = () => {
@@ -56,12 +59,24 @@ export const AuthProvider = ({ children }) => {
         // Optional: Call backend logout endpoint if necessary
     };
 
+    const updateUserHandler = (userData) => {
+        setAuthState(prevState => ({
+            ...prevState,
+            user: userData
+        }));
+        // Update localStorage
+        localStorage.setItem('authUser', JSON.stringify(userData));
+        localStorage.setItem('user', JSON.stringify(userData));
+        console.log('User updated:', userData);
+    };
+
     const contextValue = {
         isLoggedIn: authState.isLoggedIn,
         token: authState.token,
         user: authState.user,
         login: loginHandler,
         logout: logoutHandler,
+        updateUser: updateUserHandler,
     };
 
     return (

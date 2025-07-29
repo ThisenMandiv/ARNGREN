@@ -1,12 +1,13 @@
 /* src/components/Footer/Footer.css */
 
 .site-footer {
-    background-color: #000000; /* Dark background */
-    color: #bdc3c7; /* Light grey text */
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%); /* Green gradient background */
+    color: #000000; /* Black text */
     padding: 40px 0 0 0; /* Padding top, no bottom yet */
     font-size: 0.95em;
     line-height: 1.6;
     margin-top: 40px; /* Add space above the footer */
+    box-shadow: 0 -4px 20px rgba(40, 167, 69, 0.1); /* Subtle shadow */
   }
   
   .footer-content {
@@ -19,32 +20,39 @@
   }
   
   .footer-section h3 {
-    color: #ecf0f1; /* Lighter heading color */
+    color: #000000; /* Black heading color */
     font-size: 1.2em;
     margin-bottom: 20px;
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3); /* White text shadow for contrast */
   }
   
   .footer-section.about p {
     margin-bottom: 20px;
-    color: #95a5a6; /* Slightly darker grey for text */
+    color: #000000; /* Black text */
+    opacity: 0.8;
   }
   
   .footer-logo {
-    font-size: 1.8em !important; /* Ensure size overrides h3 */
+    font-size: 2.2em !important; /* Larger logo */
     font-weight: bold;
     margin-bottom: 15px !important;
-    color: #fff !important; /* White logo text */
+    color: #000000 !important; /* Black logo text */
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* White shadow for contrast */
+    letter-spacing: 2px; /* Spacing between letters */
   }
   
   .social-links a {
-    color: #bdc3c7;
+    color: #000000;
     font-size: 1.5em; /* Icon size */
     margin-right: 15px;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
+    opacity: 0.8;
   }
   .social-links a:hover {
-    color: #3498db; /* Blue hover */
+    color: #000000;
+    opacity: 1;
+    transform: translateY(-2px); /* Slight lift effect */
   }
   
   .footer-section.links ul {
@@ -58,27 +66,34 @@
   }
   
   .footer-section.links a {
-    color: #bdc3c7;
+    color: #000000;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    padding: 2px 0;
   }
   .footer-section.links a:hover {
-    color: #fff;
-    text-decoration: underline;
+    color: #000000;
+    opacity: 1;
+    text-decoration: none;
+    transform: translateX(5px); /* Slide effect */
   }
   
   .footer-section.contact-info p {
     margin-bottom: 8px;
-    color: #bdc3c7;
+    color: #000000;
+    opacity: 0.8;
+    font-size: 0.95em;
   }
   
   .footer-bottom {
-    background-color: #000000; /* Slightly darker bottom bar */
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent overlay */
     text-align: center;
     padding: 15px 20px;
     font-size: 0.9em;
-    color: #7f8c8d; /* Dim text color */
+    color: #000000; /* Black text */
     margin-top: 30px; /* Space above bottom bar */
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
   }
   
   /* Responsive adjustments if needed */

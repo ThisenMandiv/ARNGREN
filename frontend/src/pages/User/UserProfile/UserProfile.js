@@ -1,68 +1,76 @@
 // src/pages/User/UserProfile/UserProfile.js
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // <<< Import useNavigate
-import UserNav from '../../../Components/UserNav/UserNav';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import './UserProfile.css';
 
-function UserProfile() {
-    const authCtx = useContext(AuthContext);
-    const navigate = useNavigate(); // <<< Initialize navigate
+const UserProfile = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  console.log('UserProfile - Current user data:', user);
 
-    // Check if user data is available
-    if (!authCtx.isLoggedIn || !authCtx.user) {
-        // ... (safeguard remains the same) ...
-         return (
-            <div> <UserNav /> <div className="user-profile-container error"> <p>Please log in to view your profile.</p> <Link to="/login">Login</Link> </div> </div>
-         );
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
-    const { name, email, age, address } = authCtx.user;
-
-    // --- Button Handlers ---
-    const handleEditProfileClick = () => {
-        navigate('/profile/edit'); // <<< Navigate to edit page
-    };
-
-    const handleOrderHistoryClick = () => {
-        navigate('/order-history'); // <<< Navigate to order history page
-    };
-
-    const handleLogoutClick = () => {
-        authCtx.logout();
-        // Optional: Navigate home after logout
-        navigate('/');
-    };
-    // --- End Button Handlers ---
-
+  if (!user) {
     return (
-        <div>
-            <UserNav />
-            <div className="user-profile-container">
-                <h1>Your Profile</h1>
-                <div className="profile-details-card">
-                    {/* ... (profile detail items remain the same) ... */}
-                     <div className="profile-detail-item"> <span className="detail-label">Name:</span> <span className="detail-value">{name || 'N/A'}</span> </div>
-                    <div className="profile-detail-item"> <span className="detail-label">Email:</span> <span className="detail-value">{email || 'N/A'}</span> </div>
-                    <div className="profile-detail-item"> <span className="detail-label">Age:</span> <span className="detail-value">{age || 'N/A'}</span> </div>
-                    <div className="profile-detail-item"> <span className="detail-label">Address:</span> <span className="detail-value">{address || 'N/A'}</span> </div>
-
-                    <div className="profile-actions">
-                        {/* Use onClick handlers */}
-                        <button className="profile-action-button" onClick={handleEditProfileClick}>
-                            Edit Profile
-                        </button>
-                        <button className="profile-action-button" onClick={handleOrderHistoryClick}>
-                            View Order History
-                        </button>
-                        <button className="profile-action-button logout" onClick={handleLogoutClick}>
-                            Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div className="profile-container">
+        <p>Please log in to view your profile.</p>
+        <Link to="/login">Login</Link>
+      </div>
     );
-}
+  }
+
+  return (
+    <div className="profile-container">
+      <h1>Your Profile</h1>
+      
+      <div className="profile-card">
+        <div className="profile-info">
+          <div className="info-item">
+            <label>Name:</label>
+            <span>{user.name}</span>
+          </div>
+          
+          <div className="info-item">
+            <label>Email:</label>
+            <span>{user.email}</span>
+          </div>
+          
+          {user.age && (
+            <div className="info-item">
+              <label>Age:</label>
+              <span>{user.age}</span>
+            </div>
+          )}
+          
+          {user.address && (
+            <div className="info-item">
+              <label>Address:</label>
+              <span>{user.address}</span>
+            </div>
+          )}
+        </div>
+        
+        <div className="profile-actions">
+          <Link to="/profile/edit" className="btn btn-primary">
+            Edit Profile
+          </Link>
+          
+          <Link to="/my-ads" className="btn btn-secondary">
+            My Ads
+          </Link>
+          
+          <button onClick={handleLogout} className="btn btn-danger">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default UserProfile;
