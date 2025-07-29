@@ -6,8 +6,7 @@ import './App.css';
 import Layout from './Components/Layout/Layout';
 import UserNav from './Components/UserNav/UserNav';
 import Footer from './Components/Footer/Footer';
-import Chatbot from './Components/Chatbot/Chatbot';
-import './Components/Chatbot/Chatbot.css';
+
 
 // --- Import Protected Route Components ---
 import UserProtectedRoute from './Components/ProtectedRoute/UserProtectedRoute';
@@ -160,7 +159,7 @@ function App() {
       </Routes>
 
       {/* --- Persistent UI Components --- */}
-      <Chatbot />
+
       <Footer />
     </div>
   );
