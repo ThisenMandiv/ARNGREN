@@ -13,7 +13,7 @@ function Nav() {
     return (
         <nav className="admin-sidebar">
             <div className="admin-sidebar-brand">
-                <NavLink to="/admin"><span className="norway-flag"></span> Admin Panel</NavLink>
+                <NavLink to="/admin"><img src="/norway-flag.png" alt="Norway Flag" className="norway-flag-img" /> Admin Panel</NavLink>
             </div>
 
             <ul className="admin-sidebar-nav-list">

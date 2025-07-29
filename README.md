@@ -1,6 +1,6 @@
-# ARNGREN - Jewelry Marketplace
+# ARNGREN - Advertisement website
 
-A full-stack jewelry marketplace application built with Node.js backend and React frontend.
+A full-stack advertisement website built with Node.js backend and React frontend.
 
 ## 🏗️ Project Structure
 
@@ -35,7 +35,7 @@ ARNGREN/
   - Password encryption with bcrypt
 
 - **Advertisement Management**
-  - CRUD operations for jewelry advertisements
+  - CRUD operations for advertisement 
   - Image upload functionality
   - Category-based organization
 
@@ -51,7 +51,7 @@ ARNGREN/
 ### Frontend Features
 - **Responsive Design**
   - Modern, mobile-friendly UI
-  - Beautiful jewelry marketplace interface
+  - Beautiful advertisement website interface
 
 - **User Interface**
   - User registration and login
@@ -209,9 +209,6 @@ NODE_ENV=development
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Support
-
-For support, email support@arngren.com or create an issue in this repository.
 
 ## 🙏 Acknowledgments
 
