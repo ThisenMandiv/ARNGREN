@@ -1,323 +1,169 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 import api from '../../services/api';
 
 const AdminCategories = () => {
-  const { user } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    description: ''
-  });
+  const [mainForm, setMainForm] = useState({ name: '', editingId: null });
+  const [subForm, setSubForm] = useState({ name: '', mainId: null, editingIdx: null, oldName: '' });
 
+  // Fetch categories from backend
   useEffect(() => {
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
+    setLoading(true);
+    setError('');
     try {
-      setLoading(true);
-      const response = await api.get('/categories');
-      setCategories(response.data);
+      const res = await api.get('/categories');
+      setCategories(res.data);
     } catch (err) {
-      console.error('Error fetching categories:', err);
       setError('Failed to load categories');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e) => {
+  // Main category handlers
+  const handleMainSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      if (editingCategory) {
-        // Update existing category
-        await api.put(`/categories/${editingCategory._id}`, formData);
-        setMessage('Category updated successfully!');
+      if (mainForm.editingId) {
+        await api.put(`/categories/${mainForm.editingId}`, { name: mainForm.name });
       } else {
-        // Create new category
-        await api.post('/categories', formData);
-        setMessage('Category created successfully!');
+        await api.post('/categories', { name: mainForm.name });
       }
-      
-      setFormData({ name: '', description: '' });
-      setEditingCategory(null);
-      setShowForm(false);
+      setMainForm({ name: '', editingId: null });
       fetchCategories();
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save category');
-    } finally {
-      setLoading(false);
+      setError(err.response?.data?.message || 'Failed to save main category');
     }
   };
-
-  const handleEdit = (category) => {
-    setEditingCategory(category);
-    setFormData({
-      name: category.name,
-      description: category.description || ''
-    });
-    setShowForm(true);
+  const handleMainEdit = (cat) => {
+    setMainForm({ name: cat.name, editingId: cat._id });
   };
-
-  const handleDelete = async (categoryId) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
+  const handleMainDelete = async (cat) => {
+    if (window.confirm('Delete this main category and all its subcategories?')) {
       try {
-        await api.delete(`/categories/${categoryId}`);
-        setMessage('Category deleted successfully!');
+        await api.delete(`/categories/${cat._id}`);
         fetchCategories();
       } catch (err) {
-        setError(err.response?.data?.message || 'Failed to delete category');
+        setError(err.response?.data?.message || 'Failed to delete main category');
       }
     }
   };
 
-  const handleCancel = () => {
-    setFormData({ name: '', description: '' });
-    setEditingCategory(null);
-    setShowForm(false);
+  // Subcategory handlers
+  const handleSubSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (subForm.editingIdx !== null) {
+        await api.put(`/categories/${subForm.mainId}/subcategories`, { oldName: subForm.oldName, newName: subForm.name });
+      } else {
+        await api.post(`/categories/${subForm.mainId}/subcategories`, { subcategory: subForm.name });
+      }
+      setSubForm({ name: '', mainId: null, editingIdx: null, oldName: '' });
+      fetchCategories();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to save subcategory');
+    }
+  };
+  const handleSubEdit = (cat, sub, idx) => {
+    setSubForm({ name: sub, mainId: cat._id, editingIdx: idx, oldName: sub });
+  };
+  const handleSubDelete = async (cat, sub) => {
+    if (window.confirm('Delete this subcategory?')) {
+      try {
+        await api.delete(`/categories/${cat._id}/subcategories`, { data: { subcategory: sub } });
+        fetchCategories();
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to delete subcategory');
+  }
+    }
   };
 
-  const [message, setMessage] = useState('');
-
-  if (!user || user.role !== 'admin') {
-    return (
-      <div style={{ textAlign: 'center', padding: '50px 20px' }}>
-        <h2>Access Denied</h2>
-        <p>You need admin privileges to access this page.</p>
-        <Link to="/" style={{
-          display: 'inline-block',
-          marginTop: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          textDecoration: 'none',
-          borderRadius: '5px'
-        }}>
-          Go to Homepage
-        </Link>
-      </div>
-    );
-  }
-
-  if (loading && !showForm) {
-    return (
-      <div style={{ textAlign: 'center', padding: '50px 20px' }}>
-        <div>Loading categories...</div>
-      </div>
-    );
-  }
+  if (loading) return <div style={{ textAlign: 'center', padding: 40 }}>Loading...</div>;
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
       <div style={{ marginBottom: '30px' }}>
         <Link to="/admin" style={{ color: '#007bff', textDecoration: 'none' }}>
           ← Back to Dashboard
         </Link>
       </div>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <h1>Manage Categories</h1>
-        <button
-          onClick={() => setShowForm(true)}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#28a745',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          + Add Category
-        </button>
-      </div>
-
-      {error && (
-        <div style={{
-          padding: '15px',
-          backgroundColor: '#f8d7da',
-          color: '#721c24',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          border: '1px solid #f5c6cb'
-        }}>
-          {error}
-        </div>
-      )}
-
-      {message && (
-        <div style={{
-          padding: '15px',
-          backgroundColor: '#d4edda',
-          color: '#155724',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          border: '1px solid #c3e6cb'
-        }}>
-          {message}
-        </div>
-      )}
-
-      {/* Add/Edit Form */}
-      {showForm && (
-        <div style={{
-          backgroundColor: 'white',
-          padding: '30px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-          marginBottom: '30px'
-        }}>
-          <h2>{editingCategory ? 'Edit Category' : 'Add New Category'}</h2>
-          
-          <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                Category Name *
-              </label>
+      {error && <div style={{ color: 'red', marginBottom: 16 }}>{error}</div>}
+      {/* Main Category Form */}
+      <form onSubmit={handleMainSubmit} style={{ marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center' }}>
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          placeholder="Main Category Name"
+          value={mainForm.name}
+          onChange={e => setMainForm(f => ({ ...f, name: e.target.value }))}
+          style={{ flex: 1, fontSize: 16 }}
                 required
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '5px',
-                  fontSize: '16px'
-                }}
-                placeholder="Enter category name"
               />
-            </div>
-
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                Description
-              </label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                rows="3"
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  resize: 'vertical'
-                }}
-                placeholder="Enter category description"
-              />
-            </div>
-
-            <div style={{ display: 'flex', gap: '15px' }}>
-              <button
-                type="submit"
-                disabled={loading}
-                style={{
-                  padding: '12px 24px',
-                  backgroundColor: '#007bff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  opacity: loading ? 0.6 : 1
-                }}
-              >
-                {loading ? 'Saving...' : (editingCategory ? 'Update Category' : 'Add Category')}
+        <button type="submit" style={{ padding: '8px 18px', background: '#28a745', color: 'white', border: 'none', borderRadius: 5, fontWeight: 600 }}>
+          {mainForm.editingId ? 'Update' : 'Add Main Category'}
               </button>
-              
-              <button
-                type="button"
-                onClick={handleCancel}
-                style={{
-                  padding: '12px 24px',
-                  backgroundColor: '#6c757d',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer'
-                }}
-              >
-                Cancel
-              </button>
-            </div>
+        {mainForm.editingId && (
+          <button type="button" onClick={() => setMainForm({ name: '', editingId: null })} style={{ padding: '8px 12px', background: '#ccc', color: '#222', border: 'none', borderRadius: 5 }}>Cancel</button>
+        )}
           </form>
-        </div>
-      )}
-
-      {/* Categories List */}
-      <div style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        overflow: 'hidden'
-      }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      {/* Category Table */}
+      <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
           <thead style={{ backgroundColor: '#f8f9fa' }}>
             <tr>
-              <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Name</th>
-              <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Description</th>
-              <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Created</th>
+            <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Main Category</th>
+            <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Subcategories</th>
               <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {categories.map(category => (
-              <tr key={category._id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                <td style={{ padding: '15px', fontWeight: '500' }}>{category.name}</td>
+          {categories.map((cat) => (
+            <tr key={cat._id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+              <td style={{ padding: '15px', fontWeight: '500' }}>{cat.name}</td>
                 <td style={{ padding: '15px' }}>
-                  {category.description || 'No description'}
-                </td>
-                <td style={{ padding: '15px' }}>
-                  {new Date(category.createdAt).toLocaleDateString()}
-                </td>
-                <td style={{ padding: '15px' }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <button
-                      onClick={() => handleEdit(category)}
-                      style={{
-                        padding: '6px 12px',
-                        backgroundColor: '#ffc107',
-                        color: '#212529',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '12px'
-                      }}
-                    >
-                      Edit
+                <ul style={{ margin: 0, paddingLeft: 18 }}>
+                  {(cat.subcategories || []).map((sub, subIdx) => (
+                    <li key={sub} style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {sub}
+                      <button onClick={() => handleSubEdit(cat, sub, subIdx)} style={{ marginLeft: 8, fontSize: 12, background: '#ffc107', color: '#222', border: 'none', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Edit</button>
+                      <button onClick={() => handleSubDelete(cat, sub)} style={{ fontSize: 12, background: '#dc3545', color: 'white', border: 'none', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}>Delete</button>
+                    </li>
+                  ))}
+                </ul>
+                {/* Subcategory Form */}
+                {subForm.mainId === cat._id ? (
+                  <form onSubmit={handleSubSubmit} style={{ marginTop: 8, display: 'flex', gap: 8 }}>
+                    <input
+                      type="text"
+                      placeholder="Subcategory Name"
+                      value={subForm.name}
+                      onChange={e => setSubForm(f => ({ ...f, name: e.target.value }))}
+                      style={{ fontSize: 14 }}
+                      required
+                    />
+                    <button type="submit" style={{ background: '#28a745', color: 'white', border: 'none', borderRadius: 4, padding: '2px 10px', fontSize: 13 }}>
+                      {subForm.editingIdx !== null ? 'Update' : 'Add'}
                     </button>
-                    <button
-                      onClick={() => handleDelete(category._id)}
-                      style={{
-                        padding: '6px 12px',
-                        backgroundColor: '#dc3545',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '12px'
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                    <button type="button" onClick={() => setSubForm({ name: '', mainId: null, editingIdx: null, oldName: '' })} style={{ background: '#ccc', color: '#222', border: 'none', borderRadius: 4, padding: '2px 10px', fontSize: 13 }}>Cancel</button>
+                  </form>
+                ) : (
+                  <button onClick={() => setSubForm({ name: '', mainId: cat._id, editingIdx: null, oldName: '' })} style={{ marginTop: 8, fontSize: 13, background: '#007bff', color: 'white', border: 'none', borderRadius: 4, padding: '2px 10px', cursor: 'pointer' }}>+ Add Subcategory</button>
+                )}
+              </td>
+              <td style={{ padding: '15px' }}>
+                <button onClick={() => handleMainEdit(cat)} style={{ fontSize: 13, background: '#ffc107', color: '#222', border: 'none', borderRadius: 4, padding: '4px 12px', marginRight: 6, cursor: 'pointer' }}>Edit</button>
+                <button onClick={() => handleMainDelete(cat)} style={{ fontSize: 13, background: '#dc3545', color: 'white', border: 'none', borderRadius: 4, padding: '4px 12px', cursor: 'pointer' }}>Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
     </div>
   );
 };

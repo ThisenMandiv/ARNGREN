@@ -19,24 +19,21 @@ const PostAd = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [categories, setCategories] = useState([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [mainCategory, setMainCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [catLoading, setCatLoading] = useState(true);
 
-  // Fetch categories on component mount
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setCategoriesLoading(true);
-        const response = await api.get('/categories');
-        setCategories(response.data);
-      } catch (err) {
-        console.error('Error fetching categories:', err);
+    setCatLoading(true);
+    api.get('/categories')
+      .then(res => {
+        setCategories(res.data);
+        setCatLoading(false);
+      })
+      .catch(() => {
         setError('Failed to load categories');
-      } finally {
-        setCategoriesLoading(false);
-      }
-    };
-
-    fetchCategories();
+        setCatLoading(false);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -59,28 +56,21 @@ const PostAd = () => {
 
     try {
       const formDataToSend = new FormData();
-      
-      // Add form fields
       Object.keys(formData).forEach(key => {
         if (formData[key]) {
           formDataToSend.append(key, formData[key]);
         }
       });
-
-      // Add user ID
       formDataToSend.append('user', user._id);
-
-      // Add images
+      formDataToSend.append('category', subCategory);
       images.forEach(image => {
         formDataToSend.append('images', image);
       });
-
       const response = await api.post('/ads', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-
       if (response.data) {
         setSuccess('Ad posted successfully!');
         setTimeout(() => {
@@ -116,53 +106,105 @@ const PostAd = () => {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>
-        Post New Ad
-      </h1>
-
-      {error && (
-        <div style={{
-          padding: '10px',
-          backgroundColor: '#f8d7da',
-          color: '#721c24',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          border: '1px solid #f5c6cb'
-        }}>
-          {error}
-        </div>
-      )}
-
-      {success && (
-        <div style={{
-          padding: '10px',
-          backgroundColor: '#d4edda',
-          color: '#155724',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          border: '1px solid #c3e6cb'
-        }}>
-          {success}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} style={{
-        backgroundColor: 'white',
-        padding: '30px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }}>
-        <div style={{ marginBottom: '20px' }}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: '700px', margin: '0 auto', padding: '30px', background: 'white', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
+      <h1>Post an Ad</h1>
+      {error && <div style={{ color: 'red', marginBottom: 16 }}>{error}</div>}
+      {/* Main/Subcategory selection */}
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+        <div style={{ flex: 1 }}>
           <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Title *
+            Main Category *
+          </label>
+          <select
+            value={mainCategory}
+            onChange={e => {
+              setMainCategory(e.target.value);
+              setSubCategory('');
+            }}
+            required
+            disabled={catLoading}
+            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '16px', opacity: catLoading ? 0.6 : 1 }}
+          >
+            <option value="">{catLoading ? 'Loading...' : 'Select main category'}</option>
+            {categories.map(cat => (
+              <option key={cat._id} value={cat.name}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+        <div style={{ flex: 1 }}>
+          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+            Subcategory *
+          </label>
+          <select
+            value={subCategory}
+            onChange={e => setSubCategory(e.target.value)}
+            required
+            disabled={!mainCategory || catLoading}
+            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '16px', opacity: !mainCategory || catLoading ? 0.6 : 1 }}
+          >
+            <option value="">{mainCategory ? 'Select subcategory' : 'Select main category first'}</option>
+            {mainCategory && categories.find(cat => cat.name === mainCategory)?.subcategories.map(sub => (
+              <option key={sub} value={sub}>{sub}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          Title *
+        </label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          required
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+          placeholder="Enter ad title"
+        />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          Description *
+        </label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          required
+          rows="4"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px',
+            resize: 'vertical'
+          }}
+          placeholder="Describe your item or service"
+        />
+      </div>
+
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+            Price
           </label>
           <input
-            type="text"
-            name="title"
-            value={formData.title}
+            type="number"
+            name="price"
+            value={formData.price}
             onChange={handleChange}
-            required
+            min="0"
+            step="0.01"
             style={{
               width: '100%',
               padding: '10px',
@@ -170,87 +212,11 @@ const PostAd = () => {
               borderRadius: '5px',
               fontSize: '16px'
             }}
-            placeholder="Enter ad title"
+            placeholder="Enter price"
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Description *
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            rows="4"
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '5px',
-              fontSize: '16px',
-              resize: 'vertical'
-            }}
-            placeholder="Describe your item or service"
-          />
-        </div>
-
-        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
-          <div style={{ flex: 1 }}>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-              Price
-            </label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              min="0"
-              step="0.01"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '5px',
-                fontSize: '16px'
-              }}
-              placeholder="Enter price"
-            />
-          </div>
-
-          <div style={{ flex: 1 }}>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-              Category *
-            </label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-              disabled={categoriesLoading}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '5px',
-                fontSize: '16px',
-                opacity: categoriesLoading ? 0.6 : 1
-              }}
-            >
-              <option value="">
-                {categoriesLoading ? 'Loading categories...' : 'Select category'}
-              </option>
-              {categories.map(category => (
-                <option key={category._id} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ flex: 1 }}>
           <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
             Location
           </label>
@@ -269,86 +235,86 @@ const PostAd = () => {
             placeholder="Enter location"
           />
         </div>
+      </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Contact Information *
-          </label>
-          <input
-            type="text"
-            name="contactInfo"
-            value={formData.contactInfo}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '5px',
-              fontSize: '16px'
-            }}
-            placeholder="Phone number, email, or other contact info"
-          />
-        </div>
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          Contact Information *
+        </label>
+        <input
+          type="text"
+          name="contactInfo"
+          value={formData.contactInfo}
+          onChange={handleChange}
+          required
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+          placeholder="Phone number, email, or other contact info"
+        />
+      </div>
 
-        <div style={{ marginBottom: '30px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Images
-          </label>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '5px',
-              fontSize: '16px'
-            }}
-          />
-          <small style={{ color: '#666', display: 'block', marginTop: '5px' }}>
-            You can select multiple images. Supported formats: JPG, PNG, GIF
-          </small>
-        </div>
+      <div style={{ marginBottom: '30px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          Images
+        </label>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <small style={{ color: '#666', display: 'block', marginTop: '5px' }}>
+          You can select multiple images. Supported formats: JPG, PNG, GIF
+        </small>
+      </div>
 
-        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: '12px 30px',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              fontSize: '16px',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.6 : 1
-            }}
-          >
-            {loading ? 'Posting...' : 'Post Ad'}
-          </button>
+      <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: '12px 30px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            fontSize: '16px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.6 : 1
+          }}
+        >
+          {loading ? 'Posting...' : 'Post Ad'}
+        </button>
 
-          <button
-            type="button"
-            onClick={() => navigate('/my-ads')}
-            style={{
-              padding: '12px 30px',
-              backgroundColor: '#6c757d',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+        <button
+          type="button"
+          onClick={() => navigate('/my-ads')}
+          style={{
+            padding: '12px 30px',
+            backgroundColor: '#6c757d',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            fontSize: '16px',
+            cursor: 'pointer'
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   );
 };
 

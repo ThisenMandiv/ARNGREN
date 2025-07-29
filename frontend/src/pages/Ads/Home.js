@@ -1,47 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const CATEGORY_STRUCTURE = [
-  {
-    icon: '🚗',
-    name: 'Vehicles & Transport',
-    subcategories: [
-      'ATV (el.)', 'Car, el-car', 'el-Scooter & Car', 'el-Sykle-1, 2', 'Fatbike-el', 'GoKart-Pedal, el', 'Golf cars (m/skille)', 'Moped-el', 'Motorcycle-Mini', 'Bicycle-el, 1, 2'
-    ]
-  },
-  {
-    icon: '🎮',
-    name: 'Toys & Hobbies',
-    subcategories: [
-      'Hobby & RC', 'Hoverpod', 'Rocket-Fly', 'RC Products', 'Figures'
-    ]
-  },
-  {
-    icon: '📷',
-    name: 'Electronics & Gadgets',
-    subcategories: [
-      'Aquarium', 'Alarm', 'Alkotester', 'Photo Tiles', 'Digital-Certain', 'Disko-Lys', 'DVD-Player', 'Translator', 'Charger-230Vaq', 'Robots', 'Robot-Stilsandsvug', 'Solcellr'
-    ]
-  },
-  {
-    icon: '🏠',
-    name: 'Home & Entertainment',
-    subcategories: [
-      'Billiards table M/b', 'Electronics & Bab', 'HP-Mtolaughs (Bill', 'TV-Ur & Armb. Ur', 'Star-heaven'
-    ]
-  },
-  {
-    icon: '🎯',
-    name: 'Fun & Miscellaneous',
-    subcategories: [
-      'Air-joke', 'Listen', 'Converter', 'Compass (Bill/Bike)', 'Snow Shares', 'Train track (to PC)', 'Walkie Talk'
-    ]
-  }
-];
+import api from '../../services/api';
 
 const Home = () => {
+  const [categories, setCategories] = useState([]);
   const [selectedMain, setSelectedMain] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    api.get('/categories')
+      .then(res => {
+        setCategories(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Failed to load categories');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>
@@ -54,9 +36,9 @@ const Home = () => {
           gap: '24px',
           padding: '24px 0'
         }}>
-          {CATEGORY_STRUCTURE.map((cat, idx) => (
+          {categories.map((cat, idx) => (
             <button
-              key={cat.name}
+              key={cat._id}
               onClick={() => setSelectedMain(idx)}
               style={{
                 display: 'flex',
@@ -70,10 +52,11 @@ const Home = () => {
                 fontSize: '1.1rem',
                 cursor: 'pointer',
                 transition: 'transform 0.2s, box-shadow 0.2s',
-                outline: 'none'
+                outline: 'none',
+                fontWeight: 600
               }}
             >
-              <span style={{ fontSize: '48px', marginBottom: '14px' }}>{cat.icon}</span>
+              <span style={{ marginBottom: '14px', fontSize: 32 }}></span>
               <span style={{ fontWeight: 'bold', color: '#333', textAlign: 'center' }}>{cat.name}</span>
             </button>
           ))}
@@ -81,14 +64,14 @@ const Home = () => {
       ) : (
         <div>
           <button onClick={() => setSelectedMain(null)} style={{ marginBottom: 20, background: 'none', border: 'none', color: '#118d21', fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}>&larr; Back to main categories</button>
-          <h3 style={{ marginBottom: 16 }}>{CATEGORY_STRUCTURE[selectedMain].icon} {CATEGORY_STRUCTURE[selectedMain].name}</h3>
+          <h3 style={{ marginBottom: 16 }}>{categories[selectedMain].name}</h3>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
             gap: '18px',
             padding: '10px 0'
           }}>
-            {CATEGORY_STRUCTURE[selectedMain].subcategories.map(sub => (
+            {(categories[selectedMain].subcategories || []).map(sub => (
               <button
                 key={sub}
                 onClick={() => navigate(`/ads/category/${encodeURIComponent(sub)}`)}

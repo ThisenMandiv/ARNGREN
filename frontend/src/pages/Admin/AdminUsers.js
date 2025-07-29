@@ -350,7 +350,7 @@ const AdminUsers = () => {
               <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Email</th>
               <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Age</th>
               <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Role</th>
-              <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Joined</th>
+           
               <th style={{ padding: '15px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Actions</th>
             </tr>
           </thead>
@@ -372,9 +372,7 @@ const AdminUsers = () => {
                     {user.role}
                   </span>
                 </td>
-                <td style={{ padding: '15px' }}>
-                  {new Date(user.createdAt).toLocaleDateString()}
-                </td>
+          
                 <td style={{ padding: '15px' }}>
                   <div style={{ display: 'flex', gap: '10px' }}>
                     <button
