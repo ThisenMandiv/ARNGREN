@@ -37,9 +37,9 @@ function Footer() {
 
                 <div className="footer-section contact-info">
                     <h3>Contact Info</h3>
-                    <p>📍 Colombo, Sri Lanka</p>
-                    <p>📞 Phone: +94 11 234 5678</p>
-                    <p>✉️ Email: info@arngren.lk</p>
+                    <p>📍 Norway</p>
+                    <p>📞 Phone: +47 11 234 5678</p>
+                    <p>✉️ Email: info@arngren.no</p>
                     <p>🕒 Mon - Fri: 9:00 AM - 6:00 PM</p>
                 </div>
             </div>

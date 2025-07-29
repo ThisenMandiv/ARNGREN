@@ -18,7 +18,8 @@ const UserNav = () => {
     <nav className="user-nav">
       <div className="nav-container">
         <Link to={user && user.role === 'admin' ? '/admin' : '/'} className="nav-logo">
-          🇳🇴 ARNGREN
+          <span className="norway-flag"></span>
+          ARNGREN
         </Link>
         
         <div className="nav-links">
