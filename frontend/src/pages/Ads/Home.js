@@ -47,7 +47,7 @@ const Home = () => {
     <div>
       <h1>ARNGREN</h1>
       <h2>Browse items by category</h2>
-      {!selectedMain ? (
+      {selectedMain === null ? (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
